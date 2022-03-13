@@ -1,6 +1,5 @@
 import envLoader = require("@xpresser/env");
 import path = require("path");
-import session from "express-session";
 
 const pathToEnv = path.resolve(
   __filename.includes(".js")
@@ -12,33 +11,20 @@ export = envLoader(pathToEnv, {
   castBoolean: true,
   required: [
     "NODE_ENV",
-    "appName",
-    "appPort",
-    "MongoServer",
-    "dbName",
-    "jwtSecret",
-    "sessionSecret",
-    "pdfPublicKey",
-    "pdfSecretKey",
-    "publicPath",
+    "APP_NAME",
+    "APP_PORT",
+      "APP_URL",
+    "MONGO_SERVER",
+    "DB_NAME",
+    "PUBLIC_PATH",
   ],
 }) as {
   NODE_ENV: string;
-  appName: string;
-  appDomain: string;
-  appPort: string;
-  MongoServer: string;
-  dbName: string;
-  jwtSecret: string;
-  sessionSecret: string;
-  pdfPublicKey: string;
-  pdfSecretKey: string;
-  publicPath: string;
-  emailUsername: string;
-  emailPassword: string;
-  emailHost: string;
-  fromEmail: string;
-  emailPort: string;
-  appUrl: string;
-  appPhoneNumber: string;
+    APP_NAME: string;
+    APP_DOMAIN: string;
+    APP_PORT: string;
+    MONGO_SERVER: string;
+    DB_NAME: string;
+    APP_URL: string;
+    PUBLIC_PATH: string;
 };

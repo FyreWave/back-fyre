@@ -1,22 +1,17 @@
-// Import Xpresser
-import xpresser = require("xpresser");
 
-/**
- * Boot Xpresser with your config
- *
- * Get config from config.ts
- * See https://xpresserjs.com/configuration/
- */
-import config = require("./config");
+import instance = require("./backend/instance");
 
-// Initialize Xpresser
-const $ = xpresser.init(config, {exposeDollarSign: false})
+const $ = instance();
 
-// Initialize Typescript
-$.initializeTypescript(__filename)
+$.initializeTypescript(__filename);
 
+$.on.expressInit((next) => {
+    const express = require("express");
+    const folder = $.path.storage();
 
-// Boot Xpresser
+    $.app!.use("", express.static(folder));
+    next();
+});
 $.boot();
 
 // END File

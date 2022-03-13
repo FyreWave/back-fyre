@@ -1,4 +1,4 @@
-import {Controller} from "xpresser/types/http";
+import {Controller, Http} from "xpresser/types/http";
 
 
 const AppController = <Controller.Object>{
@@ -12,7 +12,23 @@ const AppController = <Controller.Object>{
      * Index Method for "/"
      * @returns {string}
      */
-    index: (): string => "<h1>My xpresser Typescript lite project</h1>",
+    ping(){
+
+
+        return {
+            message: 'pong'
+        }
+    },
+
+
+    api404(http: Http): Http.Response {
+        return http.toApiFalse(
+            {
+                error: 404,
+            },
+            404
+        );
+    },
 };
 
 export = AppController;
