@@ -1,4 +1,5 @@
 import {Controller, Http} from "xpresser/types/http";
+import wave from "../models/Wave";
 
 /**
  * WaveController
@@ -15,9 +16,18 @@ export = <Controller.Object>{
     * Example Action.
     * @param http - Current Http Instance
     */
-    action(http) {
-        return http.send({
-            route: http.route
+  async  makeWave(http: Http) {
+
+        const body = http.$body.all()
+
+        await wave.new(body);
+
+
+        console.log(body,'makeWave');
+
+        return http.status(200).json({
+            message: 'Wave Created'
         });
-    }
+
+    },
 };

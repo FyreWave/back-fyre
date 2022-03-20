@@ -7,7 +7,13 @@ const router = getInstanceRouter();
 router
   .path("/client/", () => {
     router.get("@ping");
-    router.post("@makeWave")
   })
   .controller("App")
+
+
+router
+    .path("/client/", () => {
+        router.post("@makeWave")
+    })
+    .controller("Wave")
 

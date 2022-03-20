@@ -12,6 +12,13 @@ const AppController = <Controller.Object>{
      * Index Method for "/"
      * @returns {string}
      */
+
+    index(http) {
+        return {
+            message: "No index access allowed!"
+        };
+    },
+
     ping(){
 
 
@@ -19,6 +26,8 @@ const AppController = <Controller.Object>{
             message: 'pong'
         }
     },
+
+
 
 
     api404(http: Http): Http.Response {

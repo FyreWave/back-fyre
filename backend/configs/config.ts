@@ -1,6 +1,5 @@
 import path = require("path");
-const env = require("./env");
-const isDev = env.NODE_ENV === "development";
+import { env, isDev } from "./env";
 const base = path.resolve(`${__dirname}/../../`);
 
 /**
@@ -10,7 +9,7 @@ const base = path.resolve(`${__dirname}/../../`);
 export = {
   // name of app
   name: env.APP_NAME,
-  url: env. APP_URL,
+  url: env.APP_URL,
   // app environment
   env: env.NODE_ENV,
 
@@ -22,13 +21,13 @@ export = {
 
     // Server Port
     port: env.APP_PORT,
-    ssl: {
+/*    ssl: {
       enabled: env["SSL"],
       files: {
         cert: env["SSL_CERT"],
         key: env["SSL_KEY"],
       },
-    },
+    },*/
 
     use: {
       cors: true,
@@ -60,7 +59,7 @@ export = {
      * Best value for this is: __dirname
      */
     base,
-    public: path.resolve(env.PUBLIC_PATH),
+    public: path.resolve("../front-wave/dist"),
     storage: "storage",
 
     /**
@@ -70,7 +69,7 @@ export = {
   },
   session: {
     startOnBoot: false,
-    secret: env.sessionSecret,
+    // secret: env.sessionSecret,
     cookie: {
       path: "/",
       domain: env.APP_NAME,

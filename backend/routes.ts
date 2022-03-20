@@ -1,6 +1,8 @@
 import {getInstanceRouter} from "xpresser";
-import env from "./configs/env";
+// import env from "./configs/env";
 import path from "path";
+import {env} from "./configs/env";
+
 
 
 /**
