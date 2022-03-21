@@ -13,7 +13,6 @@ export interface UserDataType {
     mobile: string,
     email: string,
     password: string,
-
 }
 
 /**
@@ -27,9 +26,8 @@ class User extends XMongoModel {
         updatedAt: is.Date(),
         createdAt: is.Date().required(),
         avatar: is.String().optional(),
-        name: is.String().required(),
-        mobile: is.String().required(),
-        email: is.String().required(),
+        mobile: is.String().optional(),
+        email: is.String().optional(),
         password: is.String().required(),
     };
 

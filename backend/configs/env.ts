@@ -19,6 +19,7 @@ export const env = Env(".env", {
     PUBLIC_PATH: Env.is.string(),
     DB_NAME: Env.optional.string("frye"),
     DB_SERVER: Env.optional.string("mongodb://127.0.0.1:27017"),
+    SESSION_SECRET: Env.is.string(),
 
 
 

@@ -69,7 +69,7 @@ export = {
   },
   session: {
     startOnBoot: false,
-    // secret: env.sessionSecret,
+    secret: env.SESSION_SECRET,
     cookie: {
       path: "/",
       domain: env.APP_NAME,
@@ -78,4 +78,7 @@ export = {
     resave: true,
     saveUninitialized: true,
   },
+    // ... Other Configs
+    bcrypt: { salt: 10 },
+
 };
