@@ -23,9 +23,10 @@ const AppController = <Controller.Object>{
     // check if included in excluded routes
 
     //get user from server state coming from middleware ^^
-    let user: User | null = http.state.get("authUser");
+    let user: User | null = http.state.get("currentUser");
+    console.log(user, "??");
     return http.send({
-      user
+      user: user?.toCollection().pick(["email", "lastSeenAt"])
     });
   },
 

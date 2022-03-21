@@ -21,4 +21,4 @@ router
   })
   .controller("App")
 
-  .middlewares(["Auth.validateAuth"]);
+  .middlewares(["Auth.validateAuth", "Auth.getCurrentUser"]);
