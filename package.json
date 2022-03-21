@@ -20,6 +20,7 @@
     "@xpresser/env": "^2.0.2",
     "@xpresser/xpress-mongo": "^1.1.8",
     "@xpresser/abolish": "^1.11.1",
+    "jsonwebtoken": "^8.5.1",
     "xpress-mongo": "^2.8.0",
     "xpresser": "^0.26.11",
     "xpresser-db-config": "^1.0.5"

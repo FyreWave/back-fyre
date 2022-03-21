@@ -1,33 +1,41 @@
-import {Controller, Http} from "xpresser/types/http";
-import wave from "../models/Wave";
+import { Controller, Http } from "xpresser/types/http";
+import { skipIfNotDefined } from "abolish/src/Functions";
+import Wave from "../models/Wave";
 
 /**
  * WaveController
  */
 export = <Controller.Object>{
-    // Controller Name
-    name: "WaveController",
+  // Controller Name
+  name: "WaveController",
 
-    // Controller Default Error Handler.
-    e: (http: Http, error: string) => http.status(401).json({ error }),
+  // Controller Default Error Handler.
+  e: (http: Http, error: string) => http.status(401).json({ error }),
 
+  middlewares: {
+    Abolish: "*"
+  },
 
-    /**
-    * Example Action.
-    * @param http - Current Http Instance
-    */
-  async  makeWave(http: Http) {
+  /**
+   * Example Action.
+   * @param http - Current Http Instance
+   */
+  async makeWave(http: Http) {
+    type body = {
+      waveName: string;
+      waveDescription: string;
+      dueDate: string;
+      targetAmount: number;
+    };
+    const body = http.validatedBody<body>();
 
-        const body = http.$body.all()
+    const newWave = await Wave.make(body);
 
-        await wave.new(body);
+    await newWave.save();
 
-
-        console.log(body,'makeWave');
-
-        return http.status(200).json({
-            message: 'Wave Created'
-        });
-
-    },
+    return http.json({
+      message: "Wave Created",
+      wave: newWave
+    });
+  }
 };

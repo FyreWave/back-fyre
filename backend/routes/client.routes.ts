@@ -2,7 +2,18 @@ import { getInstanceRouter } from "xpresser";
 
 const router = getInstanceRouter();
 
+router
+  .path("/client/", () => {
+    router.post("@makeWave");
+  })
+  .controller("Wave");
 
+router
+  .path("/client/", () => {
+    router.post("@register");
+    router.post("@login");
+  })
+  .controller("Auth");
 
 router
   .path("/client/", () => {
@@ -10,16 +21,4 @@ router
   })
   .controller("App")
 
-
-router
-    .path("/client/", () => {
-        router.post("@makeWave")
-    })
-    .controller("Wave")
-
-
-router
-    .path("/client/", () => {
-        router.post("@register")
-    })
-    .controller("Auth")
+  .middlewares(["Auth.validateAuth"]);
