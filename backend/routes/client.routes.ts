@@ -5,8 +5,11 @@ const router = getInstanceRouter();
 router
   .path("/client/", () => {
     router.post("@makeWave");
+    router.get("@allWaves");
+    router.get("get-wave/:waveId", "Wave@getWave");
   })
-  .controller("Wave");
+  .controller("Wave")
+  .middlewares(["Auth.validateAuth", "Auth.getCurrentUser"]);
 
 router
   .path("/client/", () => {

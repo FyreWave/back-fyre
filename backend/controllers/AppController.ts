@@ -26,7 +26,7 @@ const AppController = <Controller.Object>{
     let user: User | null = http.state.get("currentUser");
     console.log(user, "??");
     return http.send({
-      user: user?.toCollection().pick(["email", "lastSeenAt"])
+      user: user?.toCollection().pick(["email", "lastSeenAt", "username"])
     });
   },
 

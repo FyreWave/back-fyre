@@ -15,12 +15,13 @@
     "js-dev": "npx nodemon build/app.js"
   },
   "dependencies": {
-    "abolish": "^4.8.21",
     "@techie04/xpresser-bcrypt": "^0.0.2",
+    "@xpresser/abolish": "^1.11.1",
     "@xpresser/env": "^2.0.2",
     "@xpresser/xpress-mongo": "^1.1.8",
-    "@xpresser/abolish": "^1.11.1",
+    "abolish": "^4.8.21",
     "jsonwebtoken": "^8.5.1",
+    "slugify": "^1.6.5",
     "xpress-mongo": "^2.8.0",
     "xpresser": "^0.26.11",
     "xpresser-db-config": "^1.0.5"
