@@ -8,6 +8,8 @@ const AppController = <Controller.Object>{
    */
   name: "AppController",
 
+  middlewares: {},
+
   /**
    * Index Method for "/"
    * @returns {string}

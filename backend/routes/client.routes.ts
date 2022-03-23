@@ -9,10 +9,10 @@ router
     router.get("get-wave/:waveId", "Wave@getWave");
   })
   .controller("Wave")
-  .middlewares(["Auth.validateAuth", "Auth.getCurrentUser"]);
+  .middlewares(["Auth.getCurrentUserA"]);
 
 router
-  .path("/client/", () => {
+  .path("/auth/", () => {
     router.post("@register");
     router.post("@login");
   })
@@ -23,5 +23,5 @@ router
     router.get("@ping");
   })
   .controller("App")
-
-  .middlewares(["Auth.validateAuth", "Auth.getCurrentUser"]);
+  .middlewares(["Auth.getCurrentUserA"]);
+// .middlewares(["Auth.validateAuth", "Auth.getCurrentUser"]);
