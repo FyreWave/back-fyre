@@ -1,5 +1,5 @@
 import { Http } from "xpresser/types/http";
-import User from "../models/User";
+import UserModel from "../models/UserModel";
 
 const jwt = require("jsonwebtoken");
 
@@ -40,10 +40,10 @@ export = {
 
       // set authUsername
       // console.log(data);
-      http.state.set("authUser", User.id(data.id));
+      http.state.set("authUser", UserModel.id(data.id));
 
       if (http.state.has("authUser")) {
-        const user = await User.findById(http.state.get("authUser"));
+        const user = await UserModel.findById(http.state.get("authUser"));
 
         http.state.set("currentUser", user);
       }
@@ -76,7 +76,7 @@ export = {
 
       // set authUsername
       // console.log(data);
-      http.state.set("authUser", User.id(data.id));
+      http.state.set("authUser", UserModel.id(data.id));
 
       http.next();
     } catch {
@@ -88,7 +88,7 @@ export = {
 
   async getCurrentUser(http: Http) {
     if (http.state.has("authUser")) {
-      const user = await User.findById(http.state.get("authUser"));
+      const user = await UserModel.findById(http.state.get("authUser"));
 
       http.state.set("currentUser", user);
     }

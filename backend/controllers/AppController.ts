@@ -1,5 +1,5 @@
 import { Controller, Http } from "xpresser/types/http";
-import User from "../models/User";
+import UserModel from "../models/UserModel";
 
 const AppController = <Controller.Object>{
   /**
@@ -25,7 +25,7 @@ const AppController = <Controller.Object>{
     // check if included in excluded routes
 
     //get user from server state coming from middleware ^^
-    let user: User | null = http.state.get("currentUser");
+    let user: UserModel | null = http.state.get("currentUser");
     console.log(user, "??");
     return http.send({
       user: user?.toCollection().pick(["email", "lastSeenAt", "username"])
@@ -41,7 +41,7 @@ const AppController = <Controller.Object>{
     );
 
     //get user from server state coming from middleware ^^
-    let user: User | null = http.state.get("currentUser");
+    let user: UserModel | null = http.state.get("currentUser");
     return http.send({
       appData,
       user: user?.toCollection().pick(["email", "role", "uuid"])

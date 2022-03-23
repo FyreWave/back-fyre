@@ -1,6 +1,6 @@
 import { Controller, Http } from "xpresser/types/http";
 
-import User, { UserDataType } from "../models/User";
+import UserModel, { UserDataType } from "../models/UserModel";
 import { compare, hash } from "@techie04/xpresser-bcrypt";
 import { createToken } from "../exports";
 
@@ -37,26 +37,26 @@ export = <Controller.Object>{
 
     body.password = hash(body.password) as string;
 
-    const existingUser = await User.count({
+    const existingUser = await UserModel.count({
       email: body.email
     });
     if (existingUser) {
-      console.log("User already exists");
+      console.log("UserModel already exists");
       return http.status(400).send({
-        error: "User already exists"
+        error: "UserModel already exists"
       });
 
       // throw new Error("Email has been taken");
     }
 
     try {
-      await User.new(body);
+      await UserModel.new(body);
       return http.status(201).send({
-        message: "User Registered Successfully"
+        message: "UserModel Registered Successfully"
       });
     } catch (error) {
       return http.status(400).send({
-        error: "User already exists"
+        error: "UserModel already exists"
       });
     }
   },
@@ -66,7 +66,7 @@ export = <Controller.Object>{
     const { email, password } = http.validatedBody<body>();
     const privateFields = ["password", "_id"];
 
-    const user = await User.findOne({ email });
+    const user = await UserModel.findOne({ email });
     if (!user) {
       return http.status(400).send({
         error: "Invalid Credentials"

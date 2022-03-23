@@ -12,10 +12,10 @@ export interface WaveDataType {
 }
 
 /**
- * Wave Model
+ * WaveModel Model
  * Collection: `waves`
  */
-class Wave extends BaseModel {
+class WaveModel extends BaseModel {
   // Set Model Schema
   static schema: XMongoSchema = {
     updatedAt: is.Date(),
@@ -38,6 +38,6 @@ class Wave extends BaseModel {
  * Map Model to Collection: `waves`
  * .native() will be made available for use.
  */
-UseCollection(Wave, "waves");
+UseCollection(WaveModel, "waves");
 
-export default Wave;
+export default WaveModel;

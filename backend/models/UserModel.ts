@@ -17,10 +17,10 @@ export interface UserDataType {
 }
 
 /**
- * User Model
+ * UserModel Model
  * Collection: `users`
  */
-class User extends BaseModel {
+class UserModel extends BaseModel {
   // Set Model Schema
   static schema: XMongoSchema = {
     updatedAt: is.Date(),
@@ -39,6 +39,6 @@ class User extends BaseModel {
  * Map Model to Collection: `users`
  * .native() will be made available for use.
  */
-UseCollection(User, "users");
+UseCollection(UserModel, "users");
 
-export default User;
+export default UserModel;

@@ -1,5 +1,5 @@
 import { Maybe } from "../types/ts";
-import User from "../models/User";
+import UserModel from "../models/UserModel";
 import { ObjectId } from "xpress-mongo";
 import { $ } from "./xpresser";
 
@@ -27,7 +27,7 @@ class RequestEngine extends $.extendedRequestEngine() {
   }
 
   async loadAuthUser(options?: Record<string, any>, saveToState = true) {
-    const user = await User.findById(this.authId()!, options);
+    const user = await UserModel.findById(this.authId()!, options);
 
     if (saveToState) this.addToBoot("authUser", user);
 

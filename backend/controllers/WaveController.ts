@@ -1,7 +1,7 @@
 import { Controller, Http } from "xpresser/types/http";
 import { skipIfNotDefined } from "abolish/src/Functions";
-import Wave from "../models/Wave";
-import User from "../models/User";
+import WaveModel from "../models/WaveModel";
+import UserModel from "../models/UserModel";
 import { slugifyTitle } from "../exports";
 
 /**
@@ -35,7 +35,7 @@ export = <Controller.Object>{
 
     console.log(ownerId, "??");
 
-    const newWave = await Wave.make({
+    const newWave = await WaveModel.make({
       slug: slugifyTitle(body.waveName),
       ownerId,
       ...body
@@ -45,14 +45,14 @@ export = <Controller.Object>{
     await newWave.save();
 
     return http.json({
-      message: "Wave Created",
+      message: "WaveModel Created",
       wave: newWave
     });
   },
 
   async allWaves(http: Http) {
     const ownerId = http.state.get("authUser");
-    const waves = await Wave.find({ ownerId });
+    const waves = await WaveModel.find({ ownerId });
     return http.send({
       waves
     });
@@ -61,7 +61,7 @@ export = <Controller.Object>{
   async getWave(http: Http) {
     const waveId = http.params.waveId;
     console.log(waveId, "params");
-    const wave = await Wave.findOne({ slug: waveId });
+    const wave = await WaveModel.findOne({ slug: waveId });
     return http.send({
       wave
     });
