@@ -21,12 +21,6 @@ export = {
 
   async getCurrentUserA(http: Http) {
     const authToken = http.req.headers["cms-hit"];
-    const currentUrl = http.req.originalUrl;
-    console.log({
-      authToken,
-      currentUrl,
-      title: "getCurrentUserA"
-    });
 
     if (!authToken) {
       return http.status(200).send({
