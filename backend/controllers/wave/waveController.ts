@@ -4,7 +4,7 @@ import waveService from "./wave.service";
 import WaveModel from "../../models/WaveModel";
 import LinkModel from "../../models/LinkModel";
 import { $, slugifyTitle } from "../../exports";
-// import waveValidator from "./wave.validators";
+import waveValidator from "./wave.validators";
 
 /**
  * WaveController
@@ -42,30 +42,19 @@ export = <Controller.Object>{
   },
 
   async makeWave(http: Http) {
-    type body = {
-      waveName: string;
-      waveDescription: string;
-      dueDate: string;
-      targetAmount: number;
-    };
-    const body = http.$body.all();
+    try {
+      const body = http.$body.all();
+      const { value, error } = waveValidator.makeWavesValidator(body);
 
-    const ownerId = http.state.get("authUser");
+      const result = await waveService.makeWave(http, value);
 
-    const newWave = WaveModel.make({
-      slug: slugifyTitle(body.waveName),
-      ownerId,
-      ...body
-    });
-    // console.log(newWave);
-
-    await newWave.save();
-
-    $.events.emit("WaveEvents.createActivity", newWave);
-
-    return http.json({
-      message: "WaveModel Created",
-      wave: newWave
-    });
+      return http.send({
+        message: "New wave created"
+      });
+    } catch (error) {
+      return http.status(400).send({
+        error
+      });
+    }
   }
 };

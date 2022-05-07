@@ -27,7 +27,6 @@ export = {
   },
 
   createActivity(wave: any) {
-    // console.log("wave activity Created !!!", wave);
-    // Your Code
+    console.log("wave activity Created !!!", wave);
   }
 };

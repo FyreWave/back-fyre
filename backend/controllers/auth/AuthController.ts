@@ -1,9 +1,5 @@
 import { Controller, Http } from "xpresser/types/http";
 
-import UserModel, { UserDataType } from "../../models/UserModel";
-import { compare, hash } from "@techie04/xpresser-bcrypt";
-import { createToken } from "../../exports";
-
 import authValidator from "./auth.validators";
 import authService from "./auth.service";
 
@@ -42,7 +38,7 @@ export = <Controller.Object>{
     }
   },
 
-  async login(http, e) {
+  async login(http) {
     try {
       const body = http.$body.all();
 

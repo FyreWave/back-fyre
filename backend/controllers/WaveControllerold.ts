@@ -1,3 +1,4 @@
+/*
 import { Controller, Http } from "xpresser/types/http";
 import WaveModel from "../models/WaveModel";
 import UserModel from "../models/UserModel";
@@ -5,9 +6,9 @@ import { $, slugifyTitle } from "../exports";
 import activityModel from "../models/ActivityModel";
 import LinkModel from "../models/LinkModel";
 
-/**
+/!**
  * WaveController
- */
+ *!/
 export = <Controller.Object>{
   // Controller Name
   name: "WaveController",
@@ -15,10 +16,10 @@ export = <Controller.Object>{
   // Controller Default Error Handler.
   e: (http: Http, error: string) => http.status(401).json({ error }),
 
-  /**
+  /!**
    * Example Action.
    * @param http - Current Http Instance
-   */
+   *!/
   async makeWave(http: Http) {
     type body = {
       waveName: string;
@@ -66,3 +67,4 @@ export = <Controller.Object>{
     });
   }
 };
+*/
