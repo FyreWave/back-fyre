@@ -2,7 +2,9 @@ import { Controller, Http } from "xpresser/types/http";
 import { skipIfNotDefined } from "abolish/src/Functions";
 import WaveModel from "../models/WaveModel";
 import UserModel from "../models/UserModel";
-import { slugifyTitle } from "../exports";
+import { $, slugifyTitle } from "../exports";
+import activityModel from "../models/ActivityModel";
+import LinkModel from "../models/LinkModel";
 
 /**
  * WaveController
@@ -33,9 +35,7 @@ export = <Controller.Object>{
 
     const ownerId = http.state.get("authUser");
 
-    console.log(ownerId, "??");
-
-    const newWave = await WaveModel.make({
+    const newWave = WaveModel.make({
       slug: slugifyTitle(body.waveName),
       ownerId,
       ...body
@@ -43,6 +43,8 @@ export = <Controller.Object>{
     // console.log(newWave);
 
     await newWave.save();
+
+    $.events.emit("WaveEvents.createActivity", newWave);
 
     return http.json({
       message: "WaveModel Created",
@@ -62,8 +64,10 @@ export = <Controller.Object>{
     const waveId = http.params.waveId;
     console.log(waveId, "params");
     const wave = await WaveModel.findOne({ slug: waveId });
+    const link = await LinkModel.findOne({ waveId: wave?.id() });
     return http.send({
-      wave
+      wave,
+      link
     });
   }
 };

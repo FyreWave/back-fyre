@@ -10,9 +10,11 @@
   "scripts": {
     "start": "npm run build && node build/app.js",
     "build": "npx xjs @stack tsc",
+    "debug": "nodemon --inspect build/app.js",
     "ts-watch": "npx tsc --watch",
     "ts-dev": "npx ts-node-dev --respawn app.ts",
-    "js-dev": "npx nodemon build/app.js"
+    "js-dev": "npx nodemon build/app.js",
+    "ngrok": "ngrok http --region=us --hostname=fyrewave.ngrok.io 5300"
   },
   "dependencies": {
     "@techie04/xpresser-bcrypt": "^0.0.2",
@@ -21,7 +23,10 @@
     "@xpresser/xpress-mongo": "^1.1.8",
     "abolish": "^4.8.21",
     "flutterwave-node-v3": "^1.0.9",
+    "husky": "^7.0.4",
+    "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
+    "ngrok": "^4.3.1",
     "open": "^8.4.0",
     "slugify": "^1.6.5",
     "xpress-mongo": "^2.8.0",
@@ -30,6 +35,10 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.13",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
+    "@xpresser/ngrok": "^2.2.1",
+    "eslint": "^8.15.0",
     "nodemon": "^2.0.14",
     "prettier": "^2.6.0",
     "ts-node-dev": "^1.1.8",

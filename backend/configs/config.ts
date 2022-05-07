@@ -21,7 +21,7 @@ export = {
 
     // Server Port
     port: env.APP_PORT,
-/*    ssl: {
+    /*    ssl: {
       enabled: env["SSL"],
       files: {
         cert: env["SSL_CERT"],
@@ -29,14 +29,11 @@ export = {
       },
     },*/
 
-    use: {
-      cors: true,
-      flash: true,
-      helmet: false,
-    },
+    use: { cors: true, bodyParser: true, ngrok: true, helmet: false },
+
     router: {
-      pathCase: "kebab",
-    },
+      pathCase: "kebab"
+    }
   },
 
   /**
@@ -48,8 +45,8 @@ export = {
     database: env.DB_NAME,
     options: {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
-    },
+      useUnifiedTopology: true
+    }
   },
   paths: {
     /**
@@ -65,7 +62,7 @@ export = {
     /**
      * Point routes file to routes.ts
      */
-    routesFile: "backend://routes.ts",
+    routesFile: "backend://routes.ts"
   },
   session: {
     startOnBoot: false,
@@ -73,12 +70,11 @@ export = {
     cookie: {
       path: "/",
       domain: env.APP_NAME,
-      maxAge: 5000 * 60 * 24,
+      maxAge: 5000 * 60 * 24
     },
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: true
   },
-    // ... Other Configs
-    bcrypt: { salt: 10 },
-
+  // ... Other Configs
+  bcrypt: { salt: 10 }
 };

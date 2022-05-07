@@ -26,7 +26,7 @@ const AppController = <Controller.Object>{
 
     //get user from server state coming from middleware ^^
     let user: UserModel | null = http.state.get("currentUser");
-    console.log(user, "??");
+
     return http.send({
       user: user?.toCollection().pick(["email", "lastSeenAt", "username"])
     });

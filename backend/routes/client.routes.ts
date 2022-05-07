@@ -25,9 +25,3 @@ router
   .controller("App")
   .middlewares(["Auth.getCurrentUserA"]);
 // .middlewares(["Auth.validateAuth", "Auth.getCurrentUser"]);
-router
-  .path("/payment/", () => {
-    // router.post("@makePayment");
-  })
-  .controller("Transaction")
-  .middlewares(["Auth.getCurrentUserA"]);

@@ -14,7 +14,13 @@ const Router = getInstanceRouter();
  */
 
 Router.path("/api", () => {
+  Router.get("/", "AppController@index");
   require("./routes/client.routes");
+  require("./transaction/transaction.router");
+});
+
+Router.path("/api", () => {
+  require("./routes/link.routes");
 });
 
 // Api Route
