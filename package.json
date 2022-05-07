@@ -18,11 +18,8 @@
   },
   "dependencies": {
     "@techie04/xpresser-bcrypt": "^0.0.2",
-    "@xpresser/abolish": "^1.11.1",
     "@xpresser/env": "^2.0.2",
     "@xpresser/xpress-mongo": "^1.1.8",
-    "abolish": "^4.8.21",
-    "flutterwave-node-v3": "^1.0.9",
     "husky": "^7.0.4",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",

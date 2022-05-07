@@ -1,4 +1,4 @@
-import TransactionModel from "../models/TransactionModel";
+import TransactionModel from "../../models/TransactionModel";
 
 import { Controller, Http } from "xpresser/types/http";
 

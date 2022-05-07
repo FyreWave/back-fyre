@@ -7,4 +7,4 @@ router
     router.post("@paymentCallback");
     router.post("@getAllTransactions");
   })
-  .controller("../transaction/transaction.controller");
+  .controller("./transaction/transaction");

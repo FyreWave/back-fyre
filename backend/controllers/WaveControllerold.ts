@@ -1,5 +1,4 @@
 import { Controller, Http } from "xpresser/types/http";
-import { skipIfNotDefined } from "abolish/src/Functions";
 import WaveModel from "../models/WaveModel";
 import UserModel from "../models/UserModel";
 import { $, slugifyTitle } from "../exports";
@@ -16,10 +15,6 @@ export = <Controller.Object>{
   // Controller Default Error Handler.
   e: (http: Http, error: string) => http.status(401).json({ error }),
 
-  middlewares: {
-    Abolish: "*"
-  },
-
   /**
    * Example Action.
    * @param http - Current Http Instance
@@ -31,7 +26,7 @@ export = <Controller.Object>{
       dueDate: string;
       targetAmount: number;
     };
-    const body = http.validatedBody<body>();
+    const body = http.$body.all();
 
     const ownerId = http.state.get("authUser");
 

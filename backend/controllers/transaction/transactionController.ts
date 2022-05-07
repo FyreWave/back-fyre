@@ -1,7 +1,7 @@
 import { Controller, Http } from "xpresser/types/http";
 
-import transactionService from "../transaction/transaction.service";
-import transactionValidator from "../transaction/transaction.validators";
+import transactionService from "./transaction.service";
+import transactionValidator from "./transaction.validators";
 
 /**
  * TransactionController in
