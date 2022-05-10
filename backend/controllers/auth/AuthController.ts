@@ -42,7 +42,7 @@ export = <Controller.Object>{
     try {
       const body = http.$body.all();
 
-      const { error, value } = authValidator.loginValidator(body);
+      const { value, error } = authValidator.loginValidator(body);
 
       const result = await authService.login(http, value);
 

@@ -32,8 +32,6 @@ export = {
       throw "Invalid Credentials";
     }
 
-    console.log(user, "usXXX");
-
     if (!compare(value.password, user.data.password)) throw "Invalid Credentials";
 
     const token = createToken(user.id().toString());

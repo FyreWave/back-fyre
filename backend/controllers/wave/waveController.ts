@@ -3,7 +3,6 @@ import { Controller, Http } from "xpresser/types/http";
 import waveService from "./wave.service";
 import WaveModel from "../../models/WaveModel";
 import LinkModel from "../../models/LinkModel";
-import { $, slugifyTitle } from "../../exports";
 import waveValidator from "./wave.validators";
 
 /**
@@ -16,7 +15,7 @@ export = <Controller.Object>{
   // Controller Default Error Handler.
   e: (http: Http, error: string) => http.status(401).json({ error }),
 
-  async getAllWave(http: Http) {
+  async getAllWaves(http: Http) {
     try {
       const result = await waveService.getAllWaves(http);
       return http.send({

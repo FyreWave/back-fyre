@@ -17,7 +17,7 @@ export const env = Env(".env", {
   DB_NAME: Env.optional.string("frye"),
   DB_SERVER: Env.optional.string("mongodb://127.0.0.1:27017"),
   SESSION_SECRET: Env.is.string(),
-  FLW_SECRET_HASH: Env.is.string()
+  PAYSTACK_PRIVATE_KEY: Env.is.string()
 
   /*
         SECRET_KEY: Env.is.string(),

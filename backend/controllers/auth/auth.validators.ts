@@ -2,22 +2,26 @@ import Joi from "joi";
 
 export = {
   loginValidator: function (body: any) {
-    const schema = Joi.object().keys({
-      isEmail: Joi.boolean().default(true).optional().strip(true),
-      email: Joi.string().email().required(),
-      password: Joi.string().min(6).required(),
-      mobile: Joi.string().when("isEmail", {
+    const schema = Joi.object()
+      .keys({
+        isEmail: Joi.boolean().default(true).optional().strip(true),
+        email: Joi.string().email().required(),
+        password: Joi.string().min(6).required()
+        /*  mobile: Joi.string().when("isEmail", {
         is: false,
         then: Joi.string().required()
+      })*/
       })
-    });
+      .unknown(true);
 
-    const { error, value } = schema.validate(body);
+    const { value, error } = schema.validate(body);
+
+    console.log(value, error, "usXXX");
 
     if (error) {
       throw error;
     }
-    return { error, value };
+    return { value, error };
   },
 
   registerValidator: function (body: any) {

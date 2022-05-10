@@ -1,0 +1,147 @@
+{
+  "data1": {
+    "id": 1801842759,
+    "domain": "test",
+    "status": "success",
+    "reference": "123456789_-_VamMx",
+    "amount": 900000,
+    "message": null,
+    "gateway_response": "Successful",
+    "paid_at": "2022-05-07T16:41:45.000Z",
+    "created_at": "2022-05-07T16:41:34.000Z",
+    "channel": "card",
+    "currency": "NGN",
+    "ip_address": "88.110.118.204",
+    "metadata": {
+      "referrer": "https://fyrewave.ngrok.io/view-wave/money-for-sam-car-biqay6"
+    },
+    "fees_breakdown": null,
+    "log": null,
+    "fees": 23500,
+    "fees_split": null,
+    "authorization": {
+      "authorization_code": "AUTH_k2gtx2f97q",
+      "bin": "408408",
+      "last4": "4081",
+      "exp_month": "12",
+      "exp_year": "2030",
+      "channel": "card",
+      "card_type": "visa ",
+      "bank": "TEST BANK",
+      "country_code": "NG",
+      "brand": "visa",
+      "reusable": true,
+      "signature": "SIG_pqw3kNlQbyxWgXEEpJhZ",
+      "account_name": null,
+      "receiver_bank_account_number": null,
+      "receiver_bank": null
+    },
+    "customer": {
+      "id": 77056155,
+      "first_name": "",
+      "last_name": "",
+      "email": "auser@gmail.com",
+      "customer_code": "CUS_nk36tl2d3md1tl2",
+      "phone": "",
+      "metadata": null,
+      "risk_action": "default",
+      "international_format_phone": null
+    },
+    "plan": {},
+    "subaccount": {},
+    "split": {},
+    "order_id": null,
+    "paidAt": "2022-05-07T16:41:45.000Z",
+    "requested_amount": 900000,
+    "pos_transaction_data": null,
+    "source": {
+      "type": "web",
+      "source": "checkout",
+      "entry_point": "request_inline",
+      "identifier": null
+    }
+  },
+  "data2": {
+    "id": 1808595084,
+    "domain": "test",
+    "status": "success",
+    "reference": "3ba34fc2-3213-4fb2-95d7-a04ea25ef965",
+    "amount": 333300,
+    "message": null,
+    "gateway_response": "Successful",
+    "paid_at": "2022-05-10T06:36:06.000Z",
+    "created_at": "2022-05-10T06:36:02.000Z",
+    "channel": "card",
+    "currency": "NGN",
+    "ip_address": "89.44.201.163",
+    "metadata": {
+      "referrer": "http://localhost:3300/wave-summary/3ba34fc2-3213-4fb2-95d7-a04ea25ef965"
+    },
+    "log": {
+      "start_time": 1652164563,
+      "time_spent": 4,
+      "attempts": 1,
+      "errors": 0,
+      "success": true,
+      "mobile": false,
+      "input": [],
+      "history": [
+        {
+          "type": "action",
+          "message": "Attempted to pay with card",
+          "time": 3
+        },
+        {
+          "type": "success",
+          "message": "Successfully paid with card",
+          "time": 4
+        }
+      ]
+    },
+    "fees": 15000,
+    "fees_split": null,
+    "authorization": {
+      "authorization_code": "AUTH_2d097f4qs0",
+      "bin": "408408",
+      "last4": "4081",
+      "exp_month": "12",
+      "exp_year": "2030",
+      "channel": "card",
+      "card_type": "visa ",
+      "bank": "TEST BANK",
+      "country_code": "NG",
+      "brand": "visa",
+      "reusable": true,
+      "signature": "SIG_pqw3kNlQbyxWgXEEpJhZ",
+      "account_name": null,
+      "receiver_bank_account_number": null,
+      "receiver_bank": null
+    },
+    "customer": {
+      "id": 79536869,
+      "first_name": "",
+      "last_name": "",
+      "email": "anthony@gmail.com",
+      "customer_code": "CUS_jocvf4eyhwv7evk",
+      "phone": "",
+      "metadata": null,
+      "risk_action": "default",
+      "international_format_phone": null
+    },
+    "plan": null,
+    "split": {},
+    "order_id": null,
+    "paidAt": "2022-05-10T06:36:06.000Z",
+    "createdAt": "2022-05-10T06:36:02.000Z",
+    "requested_amount": 333300,
+    "pos_transaction_data": null,
+    "source": null,
+    "fees_breakdown": null,
+    "transaction_date": "2022-05-10T06:36:02.000Z",
+    "plan_object": {},
+    "subaccount": {}
+  }
+
+}
+
+

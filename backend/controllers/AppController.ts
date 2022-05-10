@@ -15,7 +15,7 @@ const AppController = <Controller.Object>{
    * @returns {string}
    */
 
-  index(http) {
+  index() {
     return {
       message: "No index access allowed!"
     };
@@ -25,28 +25,12 @@ const AppController = <Controller.Object>{
     // check if included in excluded routes
 
     //get user from server state coming from middleware ^^
-    let user: UserModel | null = http.state.get("currentUser");
+    const user: UserModel | null = http.state.get("currentUser");
 
     return http.send({
       user: user?.toCollection().pick(["email", "lastSeenAt", "username"])
     });
   },
-
-  /*  async ping(http) {
-    // check if included in excluded routes
-
-    const appData = await AppConfig.native().findOne(
-      {},
-      { projection: { _id: 0, createdAt: 0 } }
-    );
-
-    //get user from server state coming from middleware ^^
-    let user: UserModel | null = http.state.get("currentUser");
-    return http.send({
-      appData,
-      user: user?.toCollection().pick(["email", "role", "uuid"])
-    });
-  },*/
 
   api404(http: Http): Http.Response {
     return http.toApiFalse(

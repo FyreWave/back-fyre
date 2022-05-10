@@ -32,10 +32,3 @@ export = {
     return { error, value };
   }
 };
-
-/*
-waveName: "required|string",
-    waveDescription: "required|string",
-    dueDate: "required|date",
-    targetAmount: skipIfNotDefined("required|number"),
-    slug: skipIfNotDefined("required|string")*/

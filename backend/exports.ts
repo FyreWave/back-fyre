@@ -1,8 +1,10 @@
 import { getInstance } from "xpresser";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const slugify = require("slugify");
 
 export const $ = getInstance();
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const jwt = require("jsonwebtoken");
 
 export const maxAge = 3 * 24 * 60 * 60;

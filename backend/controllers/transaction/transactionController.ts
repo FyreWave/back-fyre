@@ -19,6 +19,22 @@ export = <Controller.Object>{
    */
 
   // Example Action
+
+  async getOneTransaction(http) {
+    console.log("getOneTransaction here");
+    const result = await transactionService.getOneTransaction(http);
+
+    return http.toApi({
+      result
+    });
+  },
+  async updateTransaction(http) {
+    const result = await transactionService.updateTransaction(http);
+
+    return http.toApi({
+      result
+    });
+  },
   async getAllTransactions(http) {
     try {
       const result = await transactionService.getAllTransactions();
@@ -35,13 +51,31 @@ export = <Controller.Object>{
     try {
       const body = http.$body.all();
 
-      const { value } = transactionValidator.paymentCallbackValidator(body);
+      /*   console.log(body);
 
-      const result = await transactionService.paymentCallback(http, value);
+      const { value } = transactionValidator.paymentCallbackValidator(body);*/
+
+      const result = await transactionService.paymentCallback(http, body);
 
       return http.status(200).send({
         message: "New transaction created ??????",
         result
+      });
+    } catch (error) {
+      return http.status(400).send({
+        message: "transaction failed",
+        error
+      });
+    }
+  },
+
+  async createTransaction(http) {
+    try {
+      const result = await transactionService.createTransaction(http);
+
+      return http.toApi({
+        message: "New transaction created",
+        result: result.toCollection().pick(["reference", "shortId"])
       });
     } catch (error) {
       return http.status(400).send({

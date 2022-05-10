@@ -5,8 +5,8 @@ router
   .path("/wave/", () => {
     router.post("@makeWave");
 
-    router.get("@getAllWave");
-    // router.get("get-wave/:waveId", "Wave@getWave");
+    router.get("@getAllWaves");
+    router.get("get-wave/:waveId", "./wave/Wave@getWave");
   })
   .controller("./wave/wave")
   .middlewares(["Auth.getCurrentUserA"]);
