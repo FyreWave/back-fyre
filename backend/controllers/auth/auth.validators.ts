@@ -16,8 +16,6 @@ export = {
 
     const { value, error } = schema.validate(body);
 
-    console.log(value, error, "usXXX");
-
     if (error) {
       throw error;
     }

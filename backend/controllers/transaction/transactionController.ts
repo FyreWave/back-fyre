@@ -21,7 +21,6 @@ export = <Controller.Object>{
   // Example Action
 
   async getOneTransaction(http) {
-    console.log("getOneTransaction here");
     const result = await transactionService.getOneTransaction(http);
 
     return http.toApi({
@@ -35,9 +34,9 @@ export = <Controller.Object>{
       result
     });
   },
-  async getAllTransactions(http) {
+  async getAllDeposits(http) {
     try {
-      const result = await transactionService.getAllTransactions();
+      const result = await transactionService.getAllDeposits(http);
 
       return http.status(200).toApi(result, true, 200);
     } catch (error) {
@@ -48,10 +47,12 @@ export = <Controller.Object>{
     }
   },
   async paymentCallback(http) {
+    console.log(http.$body.all(), "callback here ??");
+
     try {
       const body = http.$body.all();
 
-      /*   console.log(body);
+      /*   ;
 
       const { value } = transactionValidator.paymentCallbackValidator(body);*/
 
@@ -75,7 +76,24 @@ export = <Controller.Object>{
 
       return http.toApi({
         message: "New transaction created",
-        result: result.toCollection().pick(["reference", "shortId"])
+        result: result.toCollection().pick(["uuid", "shortId"])
+      });
+    } catch (error) {
+      return http.status(400).send({
+        message: "transaction error",
+        error
+      });
+    }
+  },
+
+  async addReferenceId(http) {
+    try {
+      const body = http.$body.all();
+      const result = await transactionService.addReferenceId(http, body);
+
+      return http.toApi({
+        message: "added paystack reference",
+        result
       });
     } catch (error) {
       return http.status(400).send({
@@ -85,10 +103,3 @@ export = <Controller.Object>{
     }
   }
 };
-
-// https://www.fyrewave.ngrok.io/api/payment/payment-callback
-// ?status=successful
-// &tx_ref=bitethtx-019203
-// &transaction_id=3247567
-
-// https://www.fyrewave.ngrok.io/api/payment/payment-callback?status=successful&tx_ref=bitethtx-019203&transaction_id=3247701

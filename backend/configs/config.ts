@@ -13,6 +13,12 @@ export = {
   // app environment
   env: env.NODE_ENV,
 
+  debug: {
+    requests: {
+      ignore: ["/fa/", "/assets/"]
+    }
+  },
+
   /**
    * By default xpresser sets this for you.
    */

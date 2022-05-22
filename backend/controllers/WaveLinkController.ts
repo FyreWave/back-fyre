@@ -15,10 +15,10 @@ export = <Controller.Object>{
    * @param http - Current Http Instance
    */
   generateLink(http) {
-    console.log("generateLink");
+ 
     const body = http.$body.all();
 
-    console.log(body);
+  
     return http.send({
       route: http.route
     });

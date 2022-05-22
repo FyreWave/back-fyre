@@ -8,7 +8,9 @@ class Paystack {
         .get(`https://api.paystack.co/transaction/verify/${ref}`, {
           headers: { Authorization: `Bearer ${env.PAYSTACK_PRIVATE_KEY}` }
         })
-        .then((d) => d.data)
+        .then((data) => {
+          return data.data;
+        })
         .then((json: any) => {
           console.log("Line: 12, Paystack.ts", json);
           return json && json.status ? resolve(json.data) : resolve(null);
@@ -17,7 +19,7 @@ class Paystack {
     });
   }
 
-  static getOrderId(ref: string) {
+  static getTransactionUuid(ref: string) {
     return ref.split("_-_")[0];
   }
 }

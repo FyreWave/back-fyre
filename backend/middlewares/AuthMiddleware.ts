@@ -20,6 +20,8 @@ export = {
    */
 
   async getCurrentUserA(http: Http) {
+    const body = http.$body.all();
+
     const authToken = http.req.headers["cms-hit"];
 
     if (!authToken) {
@@ -32,8 +34,6 @@ export = {
     try {
       data = jwt.verify(authToken, "actionfilm");
 
-      // set authUsername
-      // console.log(data);
       http.state.set("authUser", UserModel.id(data.id));
 
       if (http.state.has("authUser")) {
@@ -49,7 +49,6 @@ export = {
   },
 
   validateAuth(http: Http): any {
-    console.log("validateAuth middleware");
     const skip = ["/api/client/ping"];
 
     const authToken = http.req.headers["cms-hit"];
@@ -69,7 +68,6 @@ export = {
       data = jwt.verify(authToken, "actionfilm");
 
       // set authUsername
-      // console.log(data);
       http.state.set("authUser", UserModel.id(data.id));
 
       http.next();

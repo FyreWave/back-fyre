@@ -23,19 +23,14 @@ export type PaymentMethodsType = "cash" | "card" | "bank_transfer";
 export interface TransactionModelDataType {
   updatedAt?: Date;
   createdAt: Date;
-  reference: string;
   uuid: string;
   shortId: string;
   paid: string;
-  products: Array<{
-    uuid: string;
-    quantity: number;
-    brandSlug: string;
-  }>;
+
   amount: number;
   paymentMethod: PaymentMethodsType;
   fee: number;
-  status: "created" | "paid" | "delivered" | "completed";
+  status: "created" | "paid"  | "completed";
   paystack?: {
     reference: string;
     status: string;
@@ -57,7 +52,7 @@ class TransactionModel extends XMongoModel {
   static schema: XMongoSchema = {
     updatedAt: is.Date(),
     createdAt: is.Date().required(),
-    reference: is.Uuid().required(),
+    uuid: is.Uuid().required(),
     paid: is.Boolean(false).required(),
     shortId: is
       .String(() => {

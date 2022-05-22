@@ -7,13 +7,25 @@ import { Obj } from "object-collection/exports";
 import { Http } from "xpresser/types/http";
 
 export = {
+  async getTx(value: any) {
+    //get on transaction
+
+    const transaction = await TransactionModel.findOne({
+      uuid: value.uuid
+    });
+
+    console.log(transaction, "transaction");
+
+    return transaction;
+  },
+
   async getOneTransaction(http: Http) {
-    const { reference } = http.params;
+    const { uuid } = http.params;
     const transaction = TransactionModel.native()
       .aggregate([
         {
           $match: {
-            reference: reference
+            uuid: uuid
           }
         },
         {
@@ -43,16 +55,91 @@ export = {
 
     return transaction;
   },
-  async getAllTransactions() {
-    const transactions = await TransactionModel.find();
+  async getAllDeposits(http: Http) {
+    const ownerId = http.state.get("authUser");
+
+    const transactions = await TransactionModel.native()
+      .aggregate([
+        {
+          $match: {
+            ownerId,
+            paid: true,
+            status: "paid"
+          }
+        },
+        {
+          $lookup: {
+            from: "waves",
+            localField: "waveId",
+            foreignField: "_id",
+            as: "wave"
+          }
+        },
+        {
+          $unwind: "$wave"
+        },
+
+        /*  {
+          $unset: [
+            "wave._id",
+            "wave.ownerId",
+            "wave.createdAt",
+            "wave.updatedAt",
+            "wave.dueDate",
+            "wave.waveType",
+            "wave.waveDescription"
+          ]
+        },*/
+        {
+          $project: {
+            _id: 0,
+            reference: 1,
+            paid: 1,
+            status: 1,
+            amount: 1,
+            createdAt: 1,
+            wave: 1,
+            "paystack.id": 1,
+            "paystack.amount": 1,
+            "paystack.paid_at": 1,
+            "paystack.authorization": 1
+
+            // wave: 1
+          }
+        },
+
+        {
+          $unset: [
+            "wave._id",
+            "wave.ownerId",
+            "wave.createdAt",
+            "wave.updatedAt",
+            "wave.dueDate",
+            "wave.waveType",
+            "wave.waveDescription"
+          ]
+        },
+
+        {
+          $sort: {
+            createdAt: -1
+          }
+        },
+        {
+          $limit: 10
+        }
+      ])
+      .toArray();
     return transactions;
   },
 
   async updateTransaction(http: Http) {
-    const { reference, paymentData } = http.$body.all();
-    const transaction = await TransactionModel.findOne({ reference });
+    const { uuid, paymentData } = http.$body.all();
+    const transaction = await TransactionModel.findOne({ uuid });
 
-    console.log(reference, paymentData);
+    if (!transaction) throw "Transaction not found";
+
+    console.log(uuid, paymentData);
 
     transaction?.set({
       amount: paymentData.amount,
@@ -64,45 +151,65 @@ export = {
     return transaction;
   },
 
-  async paymentCallback(http: any, value: any) {
-    const body = http.$body.all();
-
+  async paymentCallback(http: any, body: any) {
     if (!body.event || (body && body.event !== "charge.success"))
       throw "Error Validating Payment!";
 
-    console.log(body);
     // Get Transaction id.
     const { reference } = body.data;
-    const data: any = isDev ? body.data : await Paystack.find(reference);
+    const data: any = await Paystack.find(reference);
+    // const data: any = isDev ? body.data : await Paystack.find(reference);
+
+    // console.log(data, "data value ??");
 
     // Stop if not successful
     if (data.status !== "success") throw "Successful payments only!";
 
-    const transaction = await TransactionModel.findOne({ reference });
+    const transactionUuid = Paystack.getTransactionUuid(reference);
+
+    const transaction = await TransactionModel.findOne({ uuid: transactionUuid });
 
     // Stop if no order with that id found.
     if (!transaction) throw `transaction  (${reference}) not found!`;
 
     // Stop if order has already been paid for.
     if (transaction.data.paid) return `transaction has already been paid for.`;
-
     await transaction.markAsPaid({
-      paystack: Obj(data).pick(["reference", "status", "paid_at", "channel"])
+      paystack: data
+      // paystack: Obj(data).pick(["reference", "status", "paid_at", "channel"])
     });
 
-    return http.toApi(data);
+    // update wave balance
+
+    return data;
   },
 
-  async createTransaction(http: any) {
+  async createTransaction(http: Http) {
     const body = http.$body.all();
 
     delete Object.assign(body, { ["waveId"]: body["_id"] })["_id"];
 
     const transaction = TransactionModel.make(body);
 
-    console.log(transaction);
-
     await transaction.save();
+
+    return transaction;
+  },
+
+  async addReferenceId(http: Http, body: any) {
+    // const transaction = await this.getTx(body);
+
+    const transaction = await TransactionModel.findOne({
+      uuid: body.uuid
+    });
+
+    if (transaction?.has("paystack")) {
+      throw `Transaction has a Paystack Reference ID.`;
+    }
+
+    // const { reference } = http.validatedBody<{ reference: string }>();
+
+    await transaction?.update({ paystack: { reference: body.reference } });
 
     return transaction;
   }

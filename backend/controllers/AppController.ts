@@ -28,7 +28,12 @@ const AppController = <Controller.Object>{
     const user: UserModel | null = http.state.get("currentUser");
 
     return http.send({
-      user: user?.toCollection().pick(["email", "lastSeenAt", "username"])
+      user: user?.toCollection().pick(["email", "lastSeenAt", "username"]),
+      info: {
+        name:"FryeWave App",
+        version: "1.0.0",
+        description: "Crowd and group funding app"
+      }
     });
   },
 

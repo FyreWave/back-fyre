@@ -31,7 +31,7 @@ export = <Controller.Object>{
 
   async getWave(http: Http) {
     const waveId = http.params.waveId;
-    console.log(waveId, "params");
+
     const wave = await WaveModel.findOne({ slug: waveId });
     const link = await LinkModel.findOne({ waveId: wave?.id() });
     return http.send({
