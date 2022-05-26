@@ -8,7 +8,24 @@ export = {
     const ownerId = http.state.get("authUser");
     const value = http.$body.all();
 
-    const waves = await WaveModel.native().find({ ownerId }).limit(value.limit).toArray();
+    const waves = await WaveModel.native()
+      .aggregate([
+        {
+          $match: {
+            ownerId
+          }
+        },
+
+        {
+          $limit: value.limit
+        },
+        {
+          $sort: {
+            createdAt: -1
+          }
+        }
+      ])
+      .toArray();
 
     return waves;
   },

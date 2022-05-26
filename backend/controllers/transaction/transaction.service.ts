@@ -202,7 +202,10 @@ export = {
         "paid_at",
         "channel",
         "authorization.last4",
-        "authorization.bank"
+        "authorization.bank",
+        "authorization.brand",
+        "authorization.channel",
+        "authorization.card_type"
       ])
     });
 
