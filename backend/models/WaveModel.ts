@@ -9,6 +9,13 @@ import BaseModel from "./BaseModel";
 export interface WaveDataType {
   updatedAt?: Date;
   createdAt: Date;
+  targetAmount: number;
+  ownerId: string;
+  dueDate: Date;
+  waveType: string;
+  waveDescription: string;
+  waveId: string;
+  balance: number;
 }
 
 /**
@@ -22,7 +29,8 @@ class WaveModel extends BaseModel {
     createdAt: is.Date().required(),
     waveName: is.String().required(),
     waveDescription: is.String().required(),
-    targetAmount: is.Number().optional(),
+    targetAmount: is.Number().required(),
+    balance: is.Number().required(),
     dueDate: is.Date().required(),
     waveType: is.String("group").required(),
     waveLink: is.String().optional(),

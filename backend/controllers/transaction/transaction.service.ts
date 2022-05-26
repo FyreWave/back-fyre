@@ -5,16 +5,29 @@ import { isDev } from "../../configs/env";
 
 import { Obj } from "object-collection/exports";
 import { Http } from "xpresser/types/http";
+import { $ } from "../../exports";
 
 export = {
+  async resetTransaction(http: Http) {
+    const { uuid } = http.$body.all();
+
+    const transaction = await TransactionModel.findOne({ uuid });
+
+    if (!transaction) throw "Transaction not found";
+
+    transaction?.set({
+      status: "pending",
+      paid: false
+    });
+    await transaction?.save();
+  },
+
   async getTx(value: any) {
     //get on transaction
 
     const transaction = await TransactionModel.findOne({
       uuid: value.uuid
     });
-
-    console.log(transaction, "transaction");
 
     return transaction;
   },
@@ -57,6 +70,8 @@ export = {
   },
   async getAllDeposits(http: Http) {
     const ownerId = http.state.get("authUser");
+
+    const value = http.$body.all();
 
     const transactions = await TransactionModel.native()
       .aggregate([
@@ -125,8 +140,9 @@ export = {
             createdAt: -1
           }
         },
+
         {
-          $limit: 10
+          $limit: value.limit
         }
       ])
       .toArray();
@@ -135,11 +151,10 @@ export = {
 
   async updateTransaction(http: Http) {
     const { uuid, paymentData } = http.$body.all();
+
     const transaction = await TransactionModel.findOne({ uuid });
 
     if (!transaction) throw "Transaction not found";
-
-    console.log(uuid, paymentData);
 
     transaction?.set({
       amount: paymentData.amount,
@@ -147,6 +162,10 @@ export = {
       status: "pending"
     });
     await transaction?.save();
+
+    // update wave balance
+
+    // $.events.emit("WaveEvents.createPaystack", transaction);
 
     return transaction;
   },
@@ -174,12 +193,23 @@ export = {
 
     // Stop if order has already been paid for.
     if (transaction.data.paid) return `transaction has already been paid for.`;
+
     await transaction.markAsPaid({
-      paystack: data
-      // paystack: Obj(data).pick(["reference", "status", "paid_at", "channel"])
+      // paystack: data
+      paystack: Obj(data).pick([
+        "reference",
+        "status",
+        "paid_at",
+        "channel",
+        "authorization.last4",
+        "authorization.bank"
+      ])
     });
 
     // update wave balance
+
+    $.events.emit("WaveEvents.createPaystack", { transactionUuid, ...data });
+    $.events.emit("WaveEvents.updateWaveTargetAmount", { transactionUuid, ...data });
 
     return data;
   },

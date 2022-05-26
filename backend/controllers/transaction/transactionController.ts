@@ -47,8 +47,6 @@ export = <Controller.Object>{
     }
   },
   async paymentCallback(http) {
-    console.log(http.$body.all(), "callback here ??");
-
     try {
       const body = http.$body.all();
 
@@ -77,6 +75,22 @@ export = <Controller.Object>{
       return http.toApi({
         message: "New transaction created",
         result: result.toCollection().pick(["uuid", "shortId"])
+      });
+    } catch (error) {
+      return http.status(400).send({
+        message: "transaction error",
+        error
+      });
+    }
+  },
+
+  async resetTransaction(http) {
+    try {
+      const result = await transactionService.resetTransaction(http);
+
+      return http.toApi({
+        message: "payment reset",
+        result
       });
     } catch (error) {
       return http.status(400).send({

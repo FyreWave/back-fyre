@@ -6,8 +6,9 @@ import { $, slugifyTitle } from "../../exports";
 export = {
   async getAllWaves(http: Http) {
     const ownerId = http.state.get("authUser");
+    const value = http.$body.all();
 
-    const waves = await WaveModel.find({ ownerId });
+    const waves = await WaveModel.native().find({ ownerId }).limit(value.limit).toArray();
 
     return waves;
   },
@@ -15,11 +16,15 @@ export = {
     const ownerId = http.state.get("authUser");
     const newWave = WaveModel.make({
       slug: slugifyTitle(value.waveName),
+      balance: value.targetAmount,
       ownerId,
       ...value
     });
 
-    $.events.emit("WaveEvents.createActivity", newWave);
+    $.events.emit("WaveEvents.createActivity", {
+      activity: "created",
+      ...newWave
+    });
 
     return await newWave.save();
   }

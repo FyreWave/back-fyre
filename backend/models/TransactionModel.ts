@@ -26,11 +26,12 @@ export interface TransactionModelDataType {
   uuid: string;
   shortId: string;
   paid: string;
+  waveId: string;
 
   amount: number;
   paymentMethod: PaymentMethodsType;
   fee: number;
-  status: "created" | "paid"  | "completed";
+  status: "created" | "paid" | "completed";
   paystack?: {
     reference: string;
     status: string;

@@ -10,6 +10,7 @@ router
     router.put("@updateTransaction");
     router.post("@getAllDeposits");
     router.post("@createTransaction");
+    router.post("@resetTransaction");
     router.post("paystack", "transaction/Transaction@addReferenceId");
   })
   .controller("transaction/transaction")

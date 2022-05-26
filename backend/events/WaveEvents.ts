@@ -2,7 +2,10 @@
  * WaveEvents
  */
 import LinkModel from "../models/LinkModel";
+import PaystackModel from "../models/PaystackModel";
 import { $ } from "../exports";
+import WaveModel from "../models/WaveModel";
+import TransactionModel from "../models/TransactionModel";
 
 export = {
   namespace: "WaveEvents",
@@ -26,7 +29,38 @@ export = {
     // Your Code
   },
 
-  createActivity(wave: any) {
-    console.log("wave activity Created !!!", wave);
+  async createPaystack(paystackData: any) {
+    const newPaystack = PaystackModel.make(paystackData);
+    await newPaystack.save();
+
+    // Your Code
+  },
+
+  async updateWaveTargetAmount(waveData: any) {
+    const transaction = await TransactionModel.findOne({
+      uuid: waveData.transactionUuid
+    });
+
+    if (!transaction) throw "Transaction not found";
+
+    const wave = await WaveModel.findOne({
+      _id: transaction.data.waveId
+    });
+
+    if (!wave) throw "Wave not found";
+
+    const newTargetAmount = wave.data.balance - transaction.data.amount;
+
+    wave?.set({
+      balance: newTargetAmount
+    });
+
+    await wave?.save();
+    console.log("update target amount", newTargetAmount, wave);
+
+    // Your Code
+  },
+  createActivity(waveData: any) {
+    console.log("wave activity Created !!!", waveData);
   }
 };

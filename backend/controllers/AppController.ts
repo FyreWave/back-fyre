@@ -30,7 +30,7 @@ const AppController = <Controller.Object>{
     return http.send({
       user: user?.toCollection().pick(["email", "lastSeenAt", "username"]),
       info: {
-        name:"FryeWave App",
+        name: "FryeWave App",
         version: "1.0.0",
         description: "Crowd and group funding app"
       }

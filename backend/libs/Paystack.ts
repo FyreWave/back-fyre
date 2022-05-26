@@ -12,7 +12,7 @@ class Paystack {
           return data.data;
         })
         .then((json: any) => {
-          console.log("Line: 12, Paystack.ts", json);
+          // console.log("Line: 12, Paystack.ts", json);
           return json && json.status ? resolve(json.data) : resolve(null);
         })
         .catch(() => resolve(null));
