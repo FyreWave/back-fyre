@@ -27,6 +27,7 @@ export interface TransactionModelDataType {
   shortId: string;
   paid: string;
   waveId: string;
+  userId: string;
 
   amount: number;
   paymentMethod: PaymentMethodsType;
@@ -63,7 +64,7 @@ class TransactionModel extends XMongoModel {
     amount: is.Number().required(),
     paymentMethod: is.String("card").required(),
     waveId: is.ObjectId().required(),
-    ownerId: is.ObjectId().required(),
+    userId: is.ObjectId().required(),
     status: is.String("created").required(),
     paystack: is.Object().undefined(),
     markedAsPaid: is.Object().undefined()

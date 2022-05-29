@@ -2,17 +2,40 @@ import WaveModel from "../../models/WaveModel";
 
 import { Http } from "xpresser/types/http";
 import { $, slugifyTitle } from "../../exports";
+import WaverModel from "../../models/WaverModel";
 
 export = {
   async getAllWaves(http: Http) {
-    const ownerId = http.state.get("authUser");
+    const userId = http.state.get("authUser");
     const value = http.$body.all();
 
-    const waves = await WaveModel.native()
+    const waves = await WaverModel.native()
       .aggregate([
         {
           $match: {
-            ownerId
+            userId
+          }
+        },
+        {
+          $lookup: {
+            from: "waves",
+            localField: "waveId",
+            foreignField: "_id",
+            as: "wave"
+          }
+        },
+        {
+          $unwind: {
+            path: "$wave",
+            preserveNullAndEmptyArrays: true,
+            includeArrayIndex: "waveIndex"
+          }
+        },
+
+        {
+          $project: {
+            _id: 0,
+            wave: 1
           }
         },
 
@@ -29,6 +52,7 @@ export = {
 
     return waves;
   },
+
   async makeWave(http: Http, value: any) {
     const ownerId = http.state.get("authUser");
     const newWave = WaveModel.make({
@@ -38,11 +62,15 @@ export = {
       ...value
     });
 
+    await newWave.save();
+
     $.events.emit("WaveEvents.createActivity", {
       activity: "created",
       ...newWave
     });
 
-    return await newWave.save();
+    $.events.emit("WaveEvents.createWaver", { ownerId, ...newWave });
+
+    return newWave;
   }
 };

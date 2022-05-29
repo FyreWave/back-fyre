@@ -16,6 +16,7 @@ export interface WaveDataType {
   waveDescription: string;
   waveId: string;
   balance: number;
+  wavers: string;
 }
 
 /**
@@ -36,7 +37,8 @@ class WaveModel extends BaseModel {
     waveLink: is.String().optional(),
     canWithdraw: is.Boolean(false).required(),
     ownerId: is.ObjectId().required(),
-    slug: is.String().optional()
+    slug: is.String().optional(),
+    waverId: is.Uuid().required()
   };
 
   public data!: WaveDataType;

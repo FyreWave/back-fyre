@@ -19,6 +19,7 @@
   "dependencies": {
     "@techie04/xpresser-bcrypt": "^0.0.2",
     "@xpresser/env": "^2.0.2",
+    "@xpresser/params-loader": "^0.1.7",
     "@xpresser/xpress-mongo": "^1.1.8",
     "axios": "^0.27.2",
     "google-libphonenumber": "^3.2.22",

@@ -6,6 +6,7 @@ import PaystackModel from "../models/PaystackModel";
 import { $ } from "../exports";
 import WaveModel from "../models/WaveModel";
 import TransactionModel from "../models/TransactionModel";
+import WaverModel from "../models/WaverModel";
 
 export = {
   namespace: "WaveEvents",
@@ -60,7 +61,17 @@ export = {
 
     // Your Code
   },
+
   createActivity(waveData: any) {
     console.log("wave activity Created !!!", waveData);
+  },
+  async createWaver(waveData: any) {
+    const waver = WaverModel.make({
+      waveId: waveData.data._id,
+      userId: waveData.data.ownerId
+    });
+    console.log("waver Added", waver);
+
+    await waver.save();
   }
 };

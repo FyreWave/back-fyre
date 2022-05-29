@@ -1,5 +1,5 @@
 {
-
   "npm://@xpresser/xpress-mongo": true,
-  "npm://@techie04/xpresser-bcrypt": true
+  "npm://@techie04/xpresser-bcrypt": true,
+  "npm://@xpresser/params-loader": true
 }
