@@ -217,12 +217,11 @@ export = {
     return data;
   },
 
-  async createTransaction(http: Http) {
-    const body = http.$body.all();
-
-    delete Object.assign(body, { ["waveId"]: body["_id"] })["_id"];
-
-    const transaction = TransactionModel.make(body);
+  async createTransaction(http: Http, value: any) {
+    const transaction = TransactionModel.make({
+      waveId: value._id,
+      userId: http.state.get("authUser")
+    });
 
     await transaction.save();
 

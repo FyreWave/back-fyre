@@ -70,13 +70,19 @@ export = <Controller.Object>{
 
   async createTransaction(http) {
     try {
-      const result = await transactionService.createTransaction(http);
+      const body = http.$body.all() as {
+        _id: string;
+        userId: string;
+      };
+
+      const result = await transactionService.createTransaction(http, body);
 
       return http.toApi({
         message: "New transaction created",
         result: result.toCollection().pick(["uuid", "shortId"])
       });
     } catch (error) {
+      console.log(error);
       return http.status(400).send({
         message: "transaction error",
         error
