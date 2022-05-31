@@ -24,6 +24,7 @@ export = {
 
   async getTx(value: any) {
     //get on transaction
+    console.log("get on transaction", value);
 
     const transaction = await TransactionModel.findOne({
       uuid: value.uuid
@@ -50,18 +51,7 @@ export = {
           }
         },
         {
-          $lookup: {
-            from: "users",
-            localField: "ownerId",
-            foreignField: "_id",
-            as: "waveCreator"
-          }
-        },
-        {
           $unwind: "$wave"
-        },
-        {
-          $unwind: "$waveCreator"
         }
       ])
       .toArray();
@@ -71,15 +61,15 @@ export = {
   async getAllDeposits(http: Http) {
     const ownerId = http.state.get("authUser");
 
+    console.log(ownerId);
+
     const value = http.$body.all();
 
     const transactions = await TransactionModel.native()
       .aggregate([
         {
           $match: {
-            ownerId,
-            paid: true,
-            status: "paid"
+            ownerId
           }
         },
         {
@@ -105,7 +95,7 @@ export = {
             "wave.waveDescription"
           ]
         },*/
-        {
+        /*    {
           $project: {
             _id: 0,
             reference: 1,
@@ -121,8 +111,8 @@ export = {
 
             // wave: 1
           }
-        },
-
+        }, */
+        /* 
         {
           $unset: [
             "wave._id",
@@ -133,7 +123,7 @@ export = {
             "wave.waveType",
             "wave.waveDescription"
           ]
-        },
+        }, */
 
         {
           $sort: {

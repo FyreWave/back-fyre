@@ -10,8 +10,9 @@ export interface UserDataType {
   updatedAt?: Date;
   createdAt: Date;
   avatar?: string;
-  username: string;
   mobile: string;
+  role: Array<string>;
+  username: string;
   email: string;
   password: string;
 }
@@ -27,9 +28,11 @@ class UserModel extends BaseModel {
     createdAt: is.Date().required(),
     avatar: is.String().optional(),
     username: is.String().optional(),
+    role: is.Array(() => ["user"]).optional(),
     mobile: is.String().optional(),
     email: is.String().optional(),
-    password: is.String().required()
+    password: is.String().required(),
+    lastSeenAt: is.Date().optional()
   };
 
   public data!: UserDataType;

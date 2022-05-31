@@ -1,0 +1,56 @@
+[
+  {
+    "_id": "629608b4907bd0248d9bd838",
+    "updatedAt": "2022-05-23T12:40:46.351Z",
+    "createdAt": "2022-05-23T12:40:46.351Z",
+    "password": "$2b$10$qIj4TyNfqCyQOw1BJG5X1u1oTRltkDvtwNX78fbmtBlL2Yaxe5ulW",
+    "email": "justice@gmail.com",
+    "firstName": "Justice",
+    "lastName": "waverley",
+    "mobile": "12345678",
+    "username": "justiceWerly",
+    "role": ["user"],
+    "lastSeenAt": "2022-05-29T09:34:34.896Z"
+  },
+  {
+    "_id": "62386e1b1c5f1e2e33510e32",
+    "updatedAt": "2022-03-21T12:22:51.400Z",
+    "createdAt": "2022-03-21T12:22:51.400Z",
+    "firstName": "admin",
+    "lastName": "waverley",
+    "email": "admin@gmail.com",
+    "username": "manager",
+    "role": ["user, admin"],
+
+    "mobile": "12345678",
+    "password": "$2b$10$Z4mW8OV9zDRX47HDNeGEMONvSFnvdpDM72oO7IKyuSv3mzTZTcJ0G",
+    "lastSeenAt": "2022-05-26T20:41:03.712Z"
+  },
+  {
+    "_id": "6279e4d38fb3e9702ba8adcf",
+    "updatedAt": "2022-05-10T04:06:43.525Z",
+    "createdAt": "2022-05-10T04:06:43.525Z",
+    "firstName": "anthony",
+    "lastName": "waverley",
+    "email": "anthony@gmail.com",
+    "mobile": "12345678",
+    "username": "anthonyWaverly",
+    "role": ["user"],
+    "password": "$2b$10$XyWHkCqyxy3EF0rKNtpgyejLxg9JtA80hi2WzX8WSCo2teWYbre62",
+
+    "lastSeenAt": "2022-05-30T07:46:49.506Z"
+  },
+  {
+    "_id": "6288959aa253983979b4cc0a",
+    "updatedAt": "2022-05-21T07:32:42.214Z",
+    "createdAt": "2022-05-21T07:32:42.214Z",
+    "password": "$2b$10$ziPjc28V5YKT2R5DPk2K3OPWoPjEr3XHpToe5VtgbjVKGGcvY0Ja6",
+    "email": "sam@gmail.com",
+    "firstName": "sam",
+    "lastName": "waverley",
+    "mobile": "12345678",
+    "username": "samWverley",
+    "role": ["user"],
+    "lastSeenAt": "2022-05-30T07:50:46.104Z"
+  }
+]
