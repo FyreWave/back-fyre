@@ -13,12 +13,15 @@ export = {
     // const numberOfStaffs = Number(4);
 
     let i = 0;
-    const fmtUsers = userDb.map((user) => {
+    const list_of_users = userDb.map((user) => {
       return {
         _id: UserModel.id(user._id),
         updatedAt: new Date(user.updatedAt),
         createdAt: new Date(user.createdAt),
         password: user.password,
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         mobile: user.mobile,
         role: user.role,
@@ -26,18 +29,12 @@ export = {
       };
     });
 
-    do {
-      const newUsers = await UserModel.native().insertMany(fmtUsers);
-
-      i++;
-    } while (i < userDb.length);
+    const newUsers = await UserModel.native().insertMany(list_of_users);
 
     const $ = job.$;
 
-    $.log("Job: Seed Users...");
-    const users = await UserModel.find({});
+    $.log(`Job: Seeded ${list_of_users.length} Users...`);
 
-    console.log(JSON.stringify(users, null, 2));
     // End current job process.
     return job.end();
   }
