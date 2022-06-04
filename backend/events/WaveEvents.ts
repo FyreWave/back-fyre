@@ -7,6 +7,7 @@ import { $ } from "../exports";
 import WaveModel from "../models/WaveModel";
 import TransactionModel from "../models/TransactionModel";
 import WaverModel from "../models/WaverModel";
+import ActivityModel from "../models/ActivityModel";
 
 export = {
   namespace: "WaveEvents",
@@ -62,15 +63,25 @@ export = {
     // Your Code
   },
 
-  createActivity(waveData: any) {
-    console.log("wave activity Created !!!", waveData);
+  async waveCreated(waveData: any) {
+    const activity = ActivityModel.make({
+      from: waveData.data.ownerId,
+      waveId: waveData.data._id,
+      userId: waveData.data.ownerId,
+      action: waveData.created
+    });
+
+    // console.log("wave activity Created !!!", activity);
+    await activity.save();
   },
+
   async createWaver(waveData: any) {
     const waver = WaverModel.make({
       waveId: waveData.data._id,
-      userId: waveData.data.ownerId
+      userId: waveData.data.ownerId,
+      amount: 0
     });
-    console.log("waver Added", waver);
+    // console.log("waver Added", waver);
 
     await waver.save();
   }

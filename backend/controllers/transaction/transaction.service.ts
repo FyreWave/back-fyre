@@ -59,9 +59,7 @@ export = {
     return transaction;
   },
   async getAllDeposits(http: Http) {
-    const ownerId = http.state.get("authUser");
-
-    console.log(ownerId);
+    const userId = http.state.get("authUser");
 
     const value = http.$body.all();
 
@@ -69,7 +67,7 @@ export = {
       .aggregate([
         {
           $match: {
-            ownerId
+            userId
           }
         },
         {
@@ -82,7 +80,7 @@ export = {
         },
         {
           $unwind: "$wave"
-        },
+        }
 
         /*  {
           $unset: [
@@ -125,7 +123,7 @@ export = {
           ]
         }, */
 
-        {
+        /*    {
           $sort: {
             createdAt: -1
           }
@@ -133,9 +131,10 @@ export = {
 
         {
           $limit: value.limit
-        }
+        } */
       ])
       .toArray();
+    console.log("transactions", transactions);
     return transactions;
   },
 

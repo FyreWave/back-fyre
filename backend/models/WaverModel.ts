@@ -10,6 +10,7 @@ export interface WaverDataType {
   createdAt: Date;
   waveId: string;
   userId: string;
+  amount: number;
   transactionId: string;
 }
 
@@ -24,7 +25,8 @@ class WaverModel extends XMongoModel {
     createdAt: is.Date().required(),
     waveId: is.ObjectId().required(),
     userId: is.ObjectId().required(),
-    transactionId: is.String().optional()
+    transactionId: is.String().optional(),
+    amount: is.Number().optional()
   };
 
   public data!: WaverDataType;

@@ -19,7 +19,7 @@ Router.path("/api", () => {
   require("./controllers/transaction/transaction.router");
   require("./controllers/wave/wave.router");
   require("./controllers/auth/auth.router");
-}).middleware(["Auth.analytics"]);
+});
 
 Router.path("/api", () => {
   require("./routes/link.routes");

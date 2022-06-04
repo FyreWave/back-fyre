@@ -7,6 +7,8 @@ import waveValidator from "./wave.validators";
 import UserModel from "../../models/UserModel";
 import Waver from "../../models/WaverModel";
 import WaverModel from "../../models/WaverModel";
+import ActivityModel from "../../models/ActivityModel";
+import { pipeline } from "stream";
 
 /**
  * WaveController
@@ -74,17 +76,9 @@ export = <Controller.Object>{
 
     const userId = http.state.get("authUser");
 
-    const wave = await WaveModel.native()
-      .aggregate([
-        {
-          $match: {
-            _id: data._id
-          }
-        }
-      ])
-      .toArray();
+    // console.log("userId", userId, data);
 
-    const waveUsers = await WaverModel.native()
+    const activities = await ActivityModel.native()
       .aggregate([
         {
           $match: {
@@ -96,21 +90,75 @@ export = <Controller.Object>{
             from: "users",
             localField: "userId",
             foreignField: "_id",
+
+            as: "user",
             pipeline: [
               {
                 $project: {
-                  _id: 0,
-                  password: 0
+                  password: 0,
+                  role: 0
                 }
               }
-            ],
-            as: "user"
+            ]
           }
         },
         {
           $unwind: {
             path: "$user",
             preserveNullAndEmptyArrays: true
+          }
+        }
+      ])
+      .toArray();
+    console.log("activities", activities, data);
+
+    const wave = await WaveModel.native()
+      .aggregate([
+        {
+          $match: {
+            _id: data._id
+          }
+        },
+        {
+          $lookup: {
+            from: "user",
+            localField: "ownerId",
+            foreignField: "_id",
+            as: "createdBy"
+          }
+        }
+      ])
+      .toArray();
+
+    const waveMembers = await WaverModel.native()
+      .aggregate([
+        {
+          $match: {
+            waveId: data._id
+          }
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "user"
+          }
+        },
+        {
+          $unwind: {
+            path: "$user",
+            preserveNullAndEmptyArrays: true,
+            includeArrayIndex: "arrayIndex"
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            "user.username": 1,
+            "user.firstName": 1,
+            "user.lastName": 1,
+            "user.email": 1
           }
         }
       ])
@@ -123,7 +171,8 @@ export = <Controller.Object>{
         link: "view-wave/buy-land-or-justice-foundationn-fibui9",
         balance_percentage: 40
       },
-      activities: [
+      activities,
+      /*  activities: [
         {
           name: "e-money",
           amount: "345,000",
@@ -148,15 +197,15 @@ export = <Controller.Object>{
           invitee: "sandra",
           date: "25-334-2023"
         }
-      ],
-      wavers: waveUsers
+      ], */
+      wavers: waveMembers
     });
   },
 
-  async getWave(http: Http) {
+  async getOneWave(http: Http) {
     const { data } = http.loadedParam("wave");
 
-    console.log(data);
+    console.log(data, "hey");
 
     const wave = await WaveModel.native()
       .aggregate([
@@ -181,6 +230,7 @@ export = <Controller.Object>{
   async makeWave(http: Http) {
     try {
       const body = http.$body.all();
+
       const { value, error } = waveValidator.makeWavesValidator(body);
 
       const result = await waveService.makeWave(http, value);

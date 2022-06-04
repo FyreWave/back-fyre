@@ -9,14 +9,14 @@ import BaseModel from "./BaseModel";
 export interface WaveDataType {
   updatedAt?: Date;
   createdAt: Date;
-  targetAmount: number;
-  ownerId: string;
+  targetAmount: Number;
+  ownerId: String;
   dueDate: Date;
-  waveType: string;
-  waveDescription: string;
-  waveId: string;
-  balance: number;
-  wavers: string;
+  waveType: String;
+  waveDescription: String;
+  waveId: String;
+  balance: Number;
+  wavers: String;
 }
 
 /**

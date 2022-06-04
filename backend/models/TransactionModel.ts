@@ -28,7 +28,6 @@ export interface TransactionModelDataType {
   paid: string;
   waveId: string;
   userId: string;
-
   amount: number;
   paymentMethod: PaymentMethodsType;
   fee: number;

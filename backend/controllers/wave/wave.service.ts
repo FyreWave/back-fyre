@@ -64,8 +64,8 @@ export = {
 
     await newWave.save();
 
-    $.events.emit("WaveEvents.createActivity", {
-      activity: "created",
+    $.events.emit("WaveEvents.waveCreated", {
+      created: "created",
       ...newWave
     });
 

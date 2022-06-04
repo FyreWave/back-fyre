@@ -10,8 +10,8 @@ export = {
    * The `index` method is called by default.
    * it also inherits namespace as name.
    */
-  index(http, user) {
-    console.log("save something to datababse", user);
+  index(http: any) {
+    console.log("save something to datababse");
     // Your Code
   }
 };
