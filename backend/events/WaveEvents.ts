@@ -51,19 +51,46 @@ export = {
 
     if (!wave) throw "Wave not found";
 
-    const newTargetAmount = wave.data.balance - transaction.data.amount;
+    const newTargetAmount = Number(wave.data.balance) - transaction.data.amount;
 
     wave?.set({
       balance: newTargetAmount
     });
 
+    console.log("update target amount", transaction, wave);
+    console.log("Wave data", waveData);
+
+    const waver = await WaverModel.findOne({
+      userId: transaction.data.userId
+    });
+
+    if (!waver) throw "Waver not found";
+
+    waver?.set({
+      amount: waver.data.amount + transaction.data.amount,
+      targetAmount: waveData.data.targetAmount
+    });
+    console.log("show waver", waver);
+
+    await waver?.save();
+
     await wave?.save();
-    console.log("update target amount", newTargetAmount, wave);
 
     // Your Code
   },
 
   async waveCreated(waveData: any) {
+    const activity = ActivityModel.make({
+      from: waveData.data.ownerId,
+      waveId: waveData.data._id,
+      userId: waveData.data.ownerId,
+      action: waveData.created
+    });
+
+    // console.log("wave activity Created !!!", activity);
+    await activity.save();
+  },
+  async waveDeposit(waveData: any) {
     const activity = ActivityModel.make({
       from: waveData.data.ownerId,
       waveId: waveData.data._id,
@@ -81,6 +108,7 @@ export = {
       userId: waveData.data.ownerId,
       amount: 0
     });
+
     // console.log("waver Added", waver);
 
     await waver.save();

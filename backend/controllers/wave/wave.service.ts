@@ -3,39 +3,32 @@ import WaveModel from "../../models/WaveModel";
 import { Http } from "xpresser/types/http";
 import { $, slugifyTitle } from "../../exports";
 import WaverModel from "../../models/WaverModel";
+import TransactionModel from "../../models/TransactionModel";
 
 export = {
   async getAllWaves(http: Http) {
-    const userId = http.state.get("authUser");
+    const ownerId = http.state.get("authUser");
     const value = http.$body.all();
 
-    const waves = await WaverModel.native()
+    console.log("getAllWaves", value, ownerId);
+
+    const totalDeposit = await TransactionModel.native()
+      .aggregate([
+        {
+          $group: {
+            _id: ownerId,
+            total: { $sum: "$amount" }
+          }
+        }
+      ])
+      .toArray();
+    console.log("total Deposit", totalDeposit);
+
+    const waves = await WaveModel.native()
       .aggregate([
         {
           $match: {
-            userId
-          }
-        },
-        {
-          $lookup: {
-            from: "waves",
-            localField: "waveId",
-            foreignField: "_id",
-            as: "wave"
-          }
-        },
-        {
-          $unwind: {
-            path: "$wave",
-            preserveNullAndEmptyArrays: true,
-            includeArrayIndex: "waveIndex"
-          }
-        },
-
-        {
-          $project: {
-            _id: 0,
-            wave: 1
+            ownerId
           }
         },
 
@@ -65,7 +58,7 @@ export = {
     await newWave.save();
 
     $.events.emit("WaveEvents.waveCreated", {
-      created: "created",
+      created: "created a waves",
       ...newWave
     });
 

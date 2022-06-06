@@ -67,7 +67,8 @@ export = {
       .aggregate([
         {
           $match: {
-            userId
+            userId,
+            paid: true
           }
         },
         {
@@ -134,7 +135,6 @@ export = {
         } */
       ])
       .toArray();
-    console.log("transactions", transactions);
     return transactions;
   },
 
@@ -202,6 +202,7 @@ export = {
 
     $.events.emit("WaveEvents.createPaystack", { transactionUuid, ...data });
     $.events.emit("WaveEvents.updateWaveTargetAmount", { transactionUuid, ...data });
+    // $.events.emit("WaveEvents.waveDeposit", { transactionUuid, ...data });
 
     return data;
   },

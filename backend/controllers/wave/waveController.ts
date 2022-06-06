@@ -110,7 +110,6 @@ export = <Controller.Object>{
         }
       ])
       .toArray();
-    console.log("activities", activities, data);
 
     const wave = await WaveModel.native()
       .aggregate([
@@ -121,10 +120,23 @@ export = <Controller.Object>{
         },
         {
           $lookup: {
-            from: "user",
+            from: "users",
             localField: "ownerId",
             foreignField: "_id",
             as: "createdBy"
+          }
+        },
+        {
+          $unwind: {
+            path: "$createdBy",
+            preserveNullAndEmptyArrays: true,
+            includeArrayIndex: "createdByIndex"
+          }
+        },
+        {
+          $project: {
+            "createdBy.password": 0,
+            "createdBy.role": 0
           }
         }
       ])
@@ -137,6 +149,22 @@ export = <Controller.Object>{
             waveId: data._id
           }
         },
+        {
+          $lookup: {
+            from: "transaction",
+            localField: "userId",
+            foreignField: "userId",
+            as: "transaction"
+          }
+        },
+        {
+          $unwind: {
+            path: "$transaction",
+            preserveNullAndEmptyArrays: true,
+            includeArrayIndex: "transactionIndex"
+          }
+        },
+
         {
           $lookup: {
             from: "users",
@@ -158,7 +186,8 @@ export = <Controller.Object>{
             "user.username": 1,
             "user.firstName": 1,
             "user.lastName": 1,
-            "user.email": 1
+            "user.email": 1,
+            "transaction.amount": 1
           }
         }
       ])
