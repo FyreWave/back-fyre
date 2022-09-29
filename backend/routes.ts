@@ -14,7 +14,6 @@ const Router = getInstanceRouter();
  */
 
 Router.path("/api", () => {
-  Router.get("/", "AppController@index");
   require("./routes/client.routes");
   require("./controllers/transaction/transaction.router");
   require("./controllers/wave/wave.router");

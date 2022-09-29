@@ -57,6 +57,19 @@ export = <Controller.Object>{
     };
   },
 
+  async getDashboardSummary(http: Http) {
+    try {
+      const result = await waveService.getDashboardSummary(http);
+      return http.send({
+        result
+      });
+    } catch (error) {
+      return http.status(400).send({
+        error
+      });
+    }
+  },
+
   async getAllWaves(http: Http) {
     try {
       const result = await waveService.getAllWaves(http);
@@ -72,163 +85,16 @@ export = <Controller.Object>{
   },
 
   async getWaveSummary(http: Http) {
-    const { data } = http.loadedParam("wave");
-
-    const userId = http.state.get("authUser");
-
-    // console.log("userId", userId, data);
-
-    const activities = await ActivityModel.native()
-      .aggregate([
-        {
-          $match: {
-            waveId: data._id
-          }
-        },
-        {
-          $lookup: {
-            from: "users",
-            localField: "userId",
-            foreignField: "_id",
-
-            as: "user",
-            pipeline: [
-              {
-                $project: {
-                  password: 0,
-                  role: 0
-                }
-              }
-            ]
-          }
-        },
-        {
-          $unwind: {
-            path: "$user",
-            preserveNullAndEmptyArrays: true
-          }
-        }
-      ])
-      .toArray();
-
-    const wave = await WaveModel.native()
-      .aggregate([
-        {
-          $match: {
-            _id: data._id
-          }
-        },
-        {
-          $lookup: {
-            from: "users",
-            localField: "ownerId",
-            foreignField: "_id",
-            as: "createdBy"
-          }
-        },
-        {
-          $unwind: {
-            path: "$createdBy",
-            preserveNullAndEmptyArrays: true,
-            includeArrayIndex: "createdByIndex"
-          }
-        },
-        {
-          $project: {
-            "createdBy.password": 0,
-            "createdBy.role": 0
-          }
-        }
-      ])
-      .toArray();
-
-    const waveMembers = await WaverModel.native()
-      .aggregate([
-        {
-          $match: {
-            waveId: data._id
-          }
-        },
-        {
-          $lookup: {
-            from: "transaction",
-            localField: "userId",
-            foreignField: "userId",
-            as: "transaction"
-          }
-        },
-        {
-          $unwind: {
-            path: "$transaction",
-            preserveNullAndEmptyArrays: true,
-            includeArrayIndex: "transactionIndex"
-          }
-        },
-
-        {
-          $lookup: {
-            from: "users",
-            localField: "userId",
-            foreignField: "_id",
-            as: "user"
-          }
-        },
-        {
-          $unwind: {
-            path: "$user",
-            preserveNullAndEmptyArrays: true,
-            includeArrayIndex: "arrayIndex"
-          }
-        },
-        {
-          $project: {
-            _id: 0,
-            "user.username": 1,
-            "user.firstName": 1,
-            "user.lastName": 1,
-            "user.email": 1,
-            "transaction.amount": 1
-          }
-        }
-      ])
-      .toArray();
-
-    // const link = await LinkModel.findOne({ waveId: wave?.id() });
-    return http.send({
-      wave: {
-        ...wave[0],
-        link: "view-wave/buy-land-or-justice-foundationn-fibui9",
-        balance_percentage: 40
-      },
-      activities,
-      /*  activities: [
-        {
-          name: "e-money",
-          amount: "345,000",
-          type: "deposited",
-          date: "25-12-2022"
-        },
-        {
-          name: "Nelson fundzbag",
-          amount: "",
-          type: "initiated a withdrawal",
-          date: "25-12-2022"
-        },
-        {
-          name: "Williams Uchendu",
-          type: "deposited",
-          amount: "23,000",
-          date: "25-12-2022"
-        },
-        {
-          name: "Sam Nmeje",
-          type: "invited",
-          invitee: "sandra",
-          date: "25-334-2023"
-        }
-      ], */
-      wavers: waveMembers
-    });
+    try {
+      const result = await waveService.getWaveSummary(http);
+      return http.send({
+        result
+      });
+    } catch (error) {
+      return http.status(400).send({
+        error
+      });
+    }
   },
 
   async getOneWave(http: Http) {

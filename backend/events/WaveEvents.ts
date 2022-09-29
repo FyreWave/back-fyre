@@ -57,8 +57,8 @@ export = {
       balance: newTargetAmount
     });
 
-    console.log("update target amount", transaction, wave);
-    console.log("Wave data", waveData);
+    // console.log("update target amount", transaction, wave);
+    // console.log("Wave data", waveData);
 
     const waver = await WaverModel.findOne({
       userId: transaction.data.userId
@@ -91,6 +91,18 @@ export = {
     await activity.save();
   },
   async waveDeposit(waveData: any) {
+    const activity = ActivityModel.make({
+      from: waveData.data.ownerId,
+      waveId: waveData.data._id,
+      userId: waveData.data.ownerId,
+      action: waveData.created,
+      amount: waveData.data.amount
+    });
+
+    console.log("wave activity Created !!!", activity);
+    await activity.save();
+  },
+  async depositActivity(waveData: any) {
     const activity = ActivityModel.make({
       from: waveData.data.ownerId,
       waveId: waveData.data._id,

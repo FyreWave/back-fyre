@@ -5,6 +5,7 @@ router
   .path("/wave/", () => {
     router.post("@makeWave");
 
+    router.post("@getDashboardSummary");
     router.post("@getAllWaves");
     router.get("get-wave-summary/:waveId", "wave/Wave@getWaveSummary");
     router.get("get-wave/:waveId", "wave/Wave@getOneWave");

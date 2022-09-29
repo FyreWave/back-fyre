@@ -15,12 +15,6 @@ const AppController = <Controller.Object>{
    * @returns {string}
    */
 
-  index() {
-    return {
-      message: "No index access allowed!"
-    };
-  },
-
   ping(http) {
     // check if included in excluded routes
 

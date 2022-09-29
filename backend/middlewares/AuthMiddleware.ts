@@ -20,8 +20,6 @@ export = {
    */
 
   async getCurrentUserA(http: Http) {
-    const body = http.$body.all();
-
     const authToken = http.req.headers["cms-hit"];
 
     if (!authToken) {
@@ -76,14 +74,5 @@ export = {
     }
 
     // console.log("AuthMiddleware is running", authToken);
-  },
-
-  async getCurrentUser(http: Http) {
-    if (http.state.has("authUser")) {
-      const user = await UserModel.findById(http.state.get("authUser"));
-
-      http.state.set("currentUser", user);
-    }
-    return http.next();
   }
 };

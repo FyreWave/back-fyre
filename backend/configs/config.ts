@@ -3,7 +3,7 @@ import { env, isDev } from "./env";
 const base = path.resolve(`${__dirname}/../../`);
 
 /**
- * Your Config File.
+ * Your Config Filea.
  * See https://xpresserjs.com/configuration/
  */
 export = {

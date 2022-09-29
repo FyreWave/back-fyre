@@ -1,0 +1,26 @@
+[
+  {
+    "name": "e-money",
+    "amount": "345,000",
+    "type": "deposited",
+    "date": "25-12-2022"
+  },
+  {
+    "name": "Nelson fundzbag",
+    "amount": "",
+    "type": "initiated a withdrawal",
+    "date": "25-12-2022"
+  },
+  {
+    "name": "Williams Uchendu",
+    "type": "deposited",
+    "amount": "23,000",
+    "date": "25-12-2022"
+  },
+  {
+    "name": "Sam Nmeje",
+    "type": "invited",
+    "invitee": "sandra",
+    "date": "25-334-2023"
+  }
+]

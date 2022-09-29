@@ -202,7 +202,7 @@ export = {
 
     $.events.emit("WaveEvents.createPaystack", { transactionUuid, ...data });
     $.events.emit("WaveEvents.updateWaveTargetAmount", { transactionUuid, ...data });
-    // $.events.emit("WaveEvents.waveDeposit", { transactionUuid, ...data });
+    $.events.emit("WaveEvents.waveDeposit", { transactionUuid, ...data });
 
     return data;
   },
